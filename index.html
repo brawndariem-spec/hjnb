@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>快速加入roblox挂群</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            background-image: 
+                linear-gradient(45deg, #e0e0e0 25%, transparent 25%),
+                linear-gradient(-45deg, #e0e0e0 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #e0e0e0 75%),
+                linear-gradient(-45deg, transparent 75%, #e0e0e0 75%);
+            background-size: 40px 40px;
+            background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(to right, #000000, #333333);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        
+        .header p {
+            font-size: 1rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        
+        .qq-icon {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        
+        .groups-container {
+            padding: 40px 30px;
+        }
+        
+        .group-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        .group-item {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid #eee;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .group-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border-color: #ddd;
+        }
+        
+        .group-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #222;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .group-name i {
+            margin-right: 10px;
+            color: #333;
+            font-size: 1.3rem;
+        }
+        
+        .join-btn {
+            display: block;
+            background-color: #222;
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-align: center;
+            margin-top: auto;
+            border: 1px solid #222;
+        }
+        
+        .join-btn:hover {
+            background-color: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .join-btn i {
+            margin-right: 8px;
+        }
+        
+        .footer {
+            background-color: #f9f9f9;
+            padding: 25px 30px;
+            text-align: center;
+            border-top: 1px solid #eee;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .footer p {
+            margin-bottom: 8px;
+        }
+        
+        .instruction {
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            border-left: 4px solid #333;
+        }
+        
+        .instruction h3 {
+            color: #222;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .instruction p {
+            color: #555;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+        
+        @media (max-width: 768px) {
+            .group-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .groups-container {
+                padding: 30px 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+                background-size: 30px 30px;
+            }
+            
+            .container {
+                border-radius: 8px;
+            }
+            
+            .header {
+                padding: 25px 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .qq-icon {
+                font-size: 2.2rem;
+            }
+            
+            .group-item {
+                padding: 20px;
+            }
+        }
+        
+        /* 添加简约动画 */
+        .group-item {
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+        }
+        
+        .group-item:nth-child(1) { animation-delay: 0.1s; }
+        .group-item:nth-child(2) { animation-delay: 0.2s; }
+        .group-item:nth-child(3) { animation-delay: 0.3s; }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="qq-icon">
+                <i class="fab fa-qq"></i>
+            </div>
+            <h1>快速加入QQ群</h1>
+            <p>❄️点击下方按钮即可快速加入对应的QQ群，与志同道合的朋友们一起交流,制作者红姜一定要尝❄️</p>
+        </div>
+        
+        <div class="groups-container">
+            <div class="instruction">
+                <h3>使用说明</h3>
+                <p>点击对应群组的"立即加入"按钮，会自动跳转到QQ群加入页面。如果您在手机端访问，可能需要先打开QQ应用。</p>
+            </div>
+            
+            <div class="group-list">
+                <!-- 第一个QQ群 -->
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>红姜一定要尝</span>
+                    </div>
+                    <p>网页制作者,点击可以合作,想改你的群名字的颜色也可以找我。</p>
+                    <a href="https://qm.qq.com/q/K8SV7ranWq" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 点击合作
+                    </a>
+                </div>
+                
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>我的群</span>
+                    </div>
+                    <p>这是一个活跃的交流群，欢迎大家加入讨论各种话题。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=F4dJvKwZOyNDEeiRG%2BHXKW4Xvw8d8M5qVo08NWscUE8rfnkp17hPkMcYlJQS%2Fkxg&busi_data=eyJncm91cENvZGUiOiIxMDUxODA5MjcyIiwidG9rZW4iOiJrM3hiTkFsazZTaEkwcWVnYzVVMVdHQlhsQlYxN0U3b1hlZFFKRnZ2Q2FIYTBCZzBqdjhZZGVFdGoxcE55c1VZIiwidWluIjoiMTYyNjg0NDcxNCJ9&data=1WTLLTTAd2iLEqZJmPswgleekvNLLViATwvZPJxkspry5MRgcUoSfVvoVp1sb2YWrp89LOxmiMCoucRE0egMow&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>XT主群</span>
+                    </div>
+                    <p>XT主群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=sOg1s4dV%2F5HjFHvj1kuLe7Tfvvo2Xjfvpqs84YpukmkUkX65yryB7%2Fb6%2BZUECi1C&busi_data=eyJncm91cENvZGUiOiI3Njk0NTI1NjgiLCJ0b2tlbiI6ImpXTHhzV3RhZlA3Z0pGeERjenkrNjJrMG5pR2tlNjFxLzNFYkRmSDRRT284NVpadlBPVUVFblg0eUdDaTl6azYiLCJ1aW4iOiIxNjI2ODQ0NzE0In0%3D&data=dqeYpdv_G7aHKD5B5VT7i8NwTjOvSN2cpbwaNSGr-2fIm849R9yf4vzns2wityWrP6O3zG7O1-9b9fqFWWX5lQ&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>XT副群</span>
+                    </div>
+                    <p>XT副群，更多交流机会。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=Ydn56o9rU139uDcM6ohvnsvhhx6uZcDm0knRoEYXkz5sMYL0Y4co%2FsYmRTTbJJnw&busi_data=eyJncm91cENvZGUiOiI4MjE4NjA1MzgiLCJ0b2tlbiI6ImJjdUNGRUVVd2NmQ0s4TVN2KytycjB5eitxbjBGa3YzUmNFWkd0dENQNHE3WFBDNEJWelVxOXJQTzFkMzBzWDYiLCJ1aW4iOiIxNjI2ODQ0NzE0In0%3D&data=UiOFdTZ3KToCxdqC4VSv0BLpuP0xGrzGPLoZ6_0FIzHqxciXCV4I-S2B4VSn6dJCf7XmFac_jQZG-gjKgBTj6w&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>XT二群</span>
+                    </div>
+                    <p>XT二群，群主是南阳。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=ycHiXAhuicHArHjgOnkwQJSWKuPXA%2BmL7mDfHEeIIEPs9UZ%2FqRpD7PGX%2Fh%2F%2Bw1P0&busi_data=eyJncm91cENvZGUiOiIxMDM2MDE1Njg4IiwidG9rZW4iOiJlS1dIckFta2RqOE5yZFZwM0xCaStWTlloNnViUFUwT0ZUVkJNWXQrd29icmE4LzNPWEkrKy9RbVREREVJcTM4IiwidWluIjoiMTYyNjg0NDcxNCJ9&data=9tTphr90d3IggHFoncWg9nWo6FNc0lIBDA5SKyZ6TCxhPQwZdDFjbHFjhlZP9F-rfjV66GqXW8vL4LKh_XkmTQ&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>                
+            
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>XT三群</span>
+                    </div>
+                    <p>XT三群，群主是南阳。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=%2BKBLMRHN%2BRIUKdl2Jw9vO02c0oxCeaRAe2z9MmUiJnVmFN8TM7XkqbTGgsQplXoC&busi_data=eyJncm91cENvZGUiOiI0MzQ2MTQ4MjIiLCJ0b2tlbiI6Ikd2UmhQUmhjbkFKZGV4bDkrWUY4cnZlM0I2U2pEZVBCWFoxd3p6RnZwQUxyY3l2aWhwM2hCbnVmb0lBbDVHcysiLCJ1aW4iOiIxNjI2ODQ0NzE0In0%3D&data=n4mCT2bMcQYf96IJczVKo049WjsKme2hOPvKsBqClUP3YEsR-Oo6yahigzUntdzyTRu7B0pEIBIYKmcKeMBziA&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+            
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>XT四群</span>
+                    </div>
+                    <p>XT四群，群主是南阳。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=mZOsYyODzxwEE72cLyjfArgC1OSmbRN%2FM15GSXBAzNFB3%2BwAvVNDZHtwg2kCem41&busi_data=eyJncm91cENvZGUiOiI5OTI3NzYxODciLCJ0b2tlbiI6IjQyL2ZYZjRYNTdWeXdzWG95ZHNtZmI3U1VYalpHeXpMTjBDUmN4Y2NOT09pOWM0OHc1azIvdmhiWlN1bEdVYlciLCJ1aW4iOiIxNjI2ODQ0NzE0In0%3D&data=oQZAx_X4741j8UeQxvkEpRr57V9Pv4NSgunt7WJbG3aO67ul0mbJY3y3oqz2l1lMExTNy16NidTeEZ8cQqJhWQ&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+            
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>XT五群</span>
+                    </div>
+                    <p>XT五群，群主是南阳。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=O1Ao%2FukmW2taaCnHaiyiEYcwzk15udJsQk1D%2FldAc4vZquIRqXznUnTdPuTkXH05&busi_data=eyJncm91cENvZGUiOiIxMDI5ODU5MDQ5IiwidG9rZW4iOiJBSk8zNFQyR0drNGpYS2pCdWNIdmNNeDkxQjlFZStXRGwvMVB4RTJMMzNLRGNZUjVSQ0kvMUw0VWFrK1JEazNPIiwidWluIjoiMTYyNjg0NDcxNCJ9&data=zEBf5EmnbWJXoVoTNFA4y8IyFgdtOtyWPsjBoFZ2B-sZw8IFTRJF2ls9Zza2adNQviFpcLf9aB10bwf_n1Vvpw&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+            
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>XT六群</span>
+                    </div>
+                    <p>XT六群，群主是南阳。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=gbRkzXxT%2BY5KTV3hMVlQ8pp1IZwh%2FqhONHOxQFJeFWgSVJWySrSL%2FOxPZ0%2BqAAiv&busi_data=eyJncm91cENvZGUiOiIxMDQ5MDc2NTU1IiwidG9rZW4iOiJwT3FRTzh2NWk0Z2ZUUTkyVEM3UVc4aUVnNzUrbFJYa3gwRGZCRHJTMWdzZXIzcGhXRllkZHJrZ3pSZ3dYV2JLIiwidWluIjoiMTYyNjg0NDcxNCJ9&data=45MjZ7V8fPdl-1KvctPRtWXcLpHSK6GKPLQFIIyPMFCXQ1ZvvDaJE7a8_AAo39bvwQ7djrQAx4z_EPrF3PjhKw&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>XT七群</span>
+                    </div>
+                    <p>XT七群，群主是南阳。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=oetV8Lc4%2BKM%2Bzw7xMdIccJWff9b3DCpmu9r5zu8njgCq%2B3T8koHOv7ff%2BDcOyoPT&busi_data=eyJncm91cENvZGUiOiIxMDU4ODk2NjA1IiwidG9rZW4iOiIrSnZPUlQ2dDVzRXRZOThlekk1TFp0RWdRTlVQQmlJMkhFSzVEZ2w4QjBzNVcveDF6ejc5NDdOK21PRFZud0M4IiwidWluIjoiMTYyNjg0NDcxNCJ9&data=cst9Fttuglnc1iyEF5Bm6Zv9hmG4X2tMF7m_iI4Gtlqu0PI1PqHy5WZrNnng_zktP0IcsGC3Uzrt3Tsq7adsOQ&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>XT八群</span>
+                    </div>
+                    <p>XT八群，群主是南阳。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=tMLlkY0ML0cco7e8C2roZdPXkhLdXVUReuZgGU98FLAEnm%2B7A8QQrapnzSrtAqfe&busi_data=eyJncm91cENvZGUiOiIxMDcwOTQzNzYyIiwidG9rZW4iOiJyUXJwVFNrVlV4WVBnUm1FMkljdXpwakFoOURpeDJ3bjhhaTdYYnU5cnl6ZkJHdHhiTVlQZHRqdG9CN01TYkdwIiwidWluIjoiMTYyNjg0NDcxNCJ9&data=awZmHTsQQJgkiIpjltswFPdZTyuze8zhP1779aQJ91QmB7n8DWZ5l3l0_tntKjzawjUj20JPNeC6opmwuDyVBg&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>Atomic</span>
+                    </div>
+                    <p>Atomic，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=b2oravxX069nCaQ7nNrs4va3xCT0%2BY8uAQbOz5qvRE%2BTFSxpHD30ni%2F34Hr5Kjg5&busi_data=eyJncm91cENvZGUiOiIxMDI2NzkwMzAiLCJ0b2tlbiI6IlFDWCs0ZG9GbURXRytRN1BSMHJCYlNGalFMUURmQnVrYU1idldZOGI2QjN0Mll1OXZDb29OdHpUY2hpQkRKVzUiLCJ1aW4iOiIxNjI2ODQ0NzE0In0%3D&data=9RpTvPAMbqpaaYFfn9OStUswjIagDIf4xU7P1jahwfeaIWkqyB0-jB-DpDdqec1gaNclmgVjCDu_nIdjolIFXg&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>XK主群</span>
+                    </div>
+                    <p>XK主群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=t%2FLHFWEKnQTEHsReBjYEO4Re9OqlsX2wfZ%2Fh%2BbQn48f10ti3lQm6CjfJGSDgQ3eS&busi_data=eyJncm91cENvZGUiOiI5MTUyMDcwOTMiLCJ0b2tlbiI6IjBjSGtjQ0sweHRnN0lXdmN2UDVkZ1ZaTG1FMDk5ajI0R3JTT09Va1RESm1YdjBodGVKMG5ER3hsSHJ0bnlaM3UiLCJ1aW4iOiIxNjI2ODQ0NzE0In0%3D&data=iahF1O27wHfneZ_HO-SpDXiSDPwj3ec8BtQmjnH85VX63dacU0n2KhAMtopkiL1-24vvoZ3PQXD0fD3xqj7ExQ&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>XK二群</span>
+                    </div>
+                    <p>XK二群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=mlkwhByOa3xvRBAVVKhPGK8AKWLNapaswz1S9Mc7%2BRYLbMNPEG%2BU6GD7fRsNRT%2Bs&busi_data=eyJncm91cENvZGUiOiI2ODUyNDMyNDIiLCJ0b2tlbiI6Inh1bHZUcVk2eGxMZG1NR3lsRUxNSWRMeUFLVjdsU3hYa0QraGlIVkxVNVZjS1hwR3VZYktoT0dOWnJLNkYrRzMiLCJ1aW4iOiIxNjI2ODQ0NzE0In0%3D&data=OiZKCd5ZcBBesA4A6m0yqwyoXQckkvwPSzMGCYT6uhWBfO1UBVBryF-196jznL__eGqGX1DWSYZF0cAODkWwsA&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>XK三群</span>
+                    </div>
+                    <p>XK三群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=mBwdY1ZP1il7%2FWTRXf9CJ9XqU8dgB5ns01i6W%2FP8coq%2Bh6d1CWT7dbX8E5hByX3D&busi_data=eyJncm91cENvZGUiOiIxMDYzMjYzNTQwIiwidG9rZW4iOiJYd0QvUVhpTFVHbWRINkpmVUMrVkJnYUhIbjJ6REVhK0RhZER3d1VpTTlkaG9aVFp4UmExSGRvVTg0UWZuaks5IiwidWluIjoiMTYyNjg0NDcxNCJ9&data=eFhuvF0Cbee0I2UxJf0S7g9cTAxxw0bDitbyFO6gmA7zCWNhDkmxiieIkPbc5gZQwAIZyJsKt1sSiIb3rxb2DA&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>XK四群</span>
+                    </div>
+                    <p>XK四群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=OJYRamy2aRNuEUCyo0d4Nghr2RI57Nsbyj8bcifz%2F4WQTnViTW2p4Y3ZRBVnPy5S&busi_data=eyJncm91cENvZGUiOiI3MTMyOTk4NjkiLCJ0b2tlbiI6InppSzBYbHFTdXhRSGo3cURUS25FdjRtejJyaENrQjRqMXdUd08yRGtKclg1akZFaEpDTW9kM0hia0IzaEQ4NzYiLCJ1aW4iOiIxNjI2ODQ0NzE0In0%3D&data=SIkq9aapnQ5ydUS0ps1Vl06adJZOReyntHiSvt9BU0-xSwiRUuodab5Dd9jpyY4_Epl9AwQGQdoCrCGyaC06QQ&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>TX主群</span>
+                    </div>
+                    <p>TX主群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=KeSgxxXOQi%2BXwV7dXxS0GzmSXpfpzhSIiw%2BUIVnLSE%2BGk%2FP1MZ6olJSCFyyYymNw&busi_data=eyJncm91cENvZGUiOiIxNjAzNjkxMTEiLCJ0b2tlbiI6ImR2T0pTd3pTS2ViQzV0ZzEwSnNFNHRnT3dXVXJ2cnFZb29jdFhjcGtqUFV5V0U0QUtrR2Y5dHJCUGZhbGZZRkciLCJ1aW4iOiIxNjI2ODQ0NzE0In0%3D&data=7zC1TXJ8dWNfjgTBxDQ9ekbNu4WrI1CN62qiWdQP4hkYV-fXNQBlwsK4BQCcvRyaiUxfK9DVz3H1ZirMTbzqfw&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>TX二群</span>
+                    </div>
+                    <p>TX二群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=%2BJEDAONJIZhlUKEWgBuWOtlEKIZLb7TWtckl2oPQv43TSdmKLU6WECEbh%2BXmO7fq&busi_data=eyJncm91cENvZGUiOiI3NjY2OTEwODQiLCJ0b2tlbiI6IlBoeDdVSTBNWDN5SzZUVHBaZkNwTmJqdEhZOXF3VTNQV3A5OTQ4UGFtL2U5aloyd01WVTNaY1hQTUVhN2lpaloiLCJ1aW4iOiIxNjI2ODQ0NzE0In0%3D&data=2b_MzuI9retVpAALg3o7UOhDcMAO_1hSmRWk60Bn6o8npY4HlUp_3S21fWXZ3RKgaR_6SKmrAIoRYh3bi-nHFQ&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>TX三群</span>
+                    </div>
+                    <p>TX三群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=ByyQTPLGFqTPHN1Z1HyeWTg7kk3MpTwphLP3VmPeuKnSFTvDX%2FMnm1aHh%2FDqq5tm&busi_data=eyJncm91cENvZGUiOiI2MDM0MzU0NTciLCJ0b2tlbiI6ImFoRm5XeWJDSU9pQUk5cTE1a056amUxTnc0c3kxdG5HdlhzVER1bUxtMWJ0ZWpwUkl4UmRwMm5HdzlnZFhnYVIiLCJ1aW4iOiIxNjI2ODQ0NzE0In0%3D&data=VpwYxaCij1I6afirFNT8jOno3M7gi5IdBqWyw9B-KBjTKlZwI6K69ptvTH4-QZrtDljSXX59pcky1OVKdB667w&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>TX四主群</span>
+                    </div>
+                    <p>TX四群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=AIA7J4%2Bp4SUJAwmJAnAskv1jRnYqmfgHgVMmfcbhtIw3m8n1KVMA%2BGUglFV9wSce&busi_data=eyJncm91cENvZGUiOiI4NTA4NzA4MTAiLCJ0b2tlbiI6ImF1Sk96OXBBajFqMVdzcE00dGNUT3g0MVp1RjRjTmUyNG4yUXhYeGJDem92T0dFbUIwNStEUzdJbDNiaFdGL00iLCJ1aW4iOiIxNjI2ODQ0NzE0In0%3D&data=Zoz3X-1E0h2z7DrqOitF51tmHijoFMwMacm0q1QwEwbmMBIzfzDVw7wgAbCqMPsAI9aaXpvw_TTkBU6bbLZFfw&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>迪脚本主群</span>
+                    </div>
+                    <p>迪脚本主群，分享技术心得与生活趣事。</p>
+                    <a href="https://brawndariem-spec.github.io/qqqq/">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>迪脚本二群</span>
+                    </div>
+                    <p>迪脚本二群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=2RIToKUoYoGwLdAvTEPRpnebcgXMMsPHmZJZl%2F8s0I1kVDvjngyq2nfUKQSQcrtb&busi_data=eyJncm91cENvZGUiOiIxMDczMTEyNTg1IiwidG9rZW4iOiI0eU10K0tjdTllZFlNbVd1VG9mdjZleVZ0d3V1YVpEZitwRWJMWW1VVnlPVWh2U3pnUEx2Y2plaUs2OXJCWHE3IiwidWluIjoiMTYyNjg0NDcxNCJ9&data=ZW9MYzn3wDfmBTiiskI_NocLK4kqPRsGkLizsNE-0bcEz7MkTiKdStD0SZH0aErScuGYc2DfNQjDRmnfFjxmLQ&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+<div class="group-name">
+    <i class="fas fa-users" style="color: #FF6B6B;"></i>
+    <span style="background: linear-gradient(90deg, #FF6B6B, #FFE66D, #4ECDC4, #45B7D1);
+           -webkit-background-clip: text;
+           -webkit-text-fill-color: transparent;
+           font-weight: bold;">KG主群</span>
+</div>
+<p style="background: linear-gradient(90deg, #45B7D1, #96CEB4, #FFEAA7);
+           -webkit-background-clip: text;
+           -webkit-text-fill-color: transparent;
+           font-weight: bold;">KG主群，分享技术心得与生活趣事。</p>
+<a href="https://qun.qq.com/universal-share/share?ac=1&authKey=4ZsmFT%2F4a%2BLHL%2BZ8JIV4sNCRdPhpcjSmYMa4mBp3yetOWn%2F7866F4vxO02i%2FXZJQ&busi_data=eyJncm91cENvZGUiOiI4MTkxMDQxMzkiLCJ0b2tlbiI6IndSd0dLT2JhS292c3E5K3pQckJFTjZRUVVJcFV4K3UyZjhPQUg0bERkZFBJWlYwS1ZWTSsvMmJjYkZud1IyaHEiLCJ1aW4iOiIxNjI2ODQ0NzE0In0%3D&data=xJ6cHCSAdFPFzSojJ6b95tqcyElmvBTnd3WxbnMHlWrAtAit4e5dC7IEYuo7cE-9ug2zEs2manyHstqOh7Iq4Q&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank" style="color: #4ECDC4; font-weight: bold;">
+    <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>KG二群</span>
+                    </div>
+                    <p>KG二群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=THfCNZ9Bg7paGEYb2spZlaFB03OH9Q2fgLc52VYu8AwsHCElcMTzejdTp%2FV3Wswh&busi_data=eyJncm91cENvZGUiOiI0Nzk2NTIxMjQiLCJ0b2tlbiI6IjJFOUo3RFRWYXBpOGZMTThWTEcxNFIxSnJYenNRaXFESlBiWWFZYmJOdGFkajVab2RqVm1sc0FzMDYzejM2eXgiLCJ1aW4iOiIxNjI2ODQ0NzE0In0%3D&data=NeVFIlvedPADCCuwuxoscob-nlSu7_fP7OsUG0VuwjeiQITqurVq5-qceD51E_IAFXCKNaM02FREC1IUm3Ps6g&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>Moon Lua</span>
+                    </div>
+                    <p>Moon Lua，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=xEnmoSDjOLjWQrD%2FeKN3x6qq1raWsmof8odI3Y17NRETWd1Ysm1b6YaYu1kef6eH&busi_data=eyJncm91cENvZGUiOiIxMDU0MzE4NDY0IiwidG9rZW4iOiIxZVA5UytMbWZJZXUvNXhlVHQrY25OZ3QzRXJJN2JBNW1Id0lUZGdBcVpSOTZhNFlqZ3RzVTV2VDZkY2x0d085IiwidWluIjoiMTYyNjg0NDcxNCJ9&data=QbzXVA6CsiPWuLImflLi_XzGwI5TINm05mrihzu_csT5bWJx8jc1H920kvFGZEg1AC_ugzHGZ_8S28NHiRIEsg&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>寒脚本主群</span>
+                    </div>
+                    <p>寒脚本主群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=D6jS9tBHeYd7NRrfCuHjbIJDFgDN9rWVee1u2UBoE7a9n9HZ4d%2BVCkjzfKzbxBqy&busi_data=eyJncm91cENvZGUiOiIxMDY3MDI3NTUxIiwidG9rZW4iOiJ5cllSMTlzcFNhSzBtdy9kbTdBWnk4blhhdHlZWWFNVFB6UC9aUmFkRFh6SEsyQ05acFlva2c0cUFwZnZzYmFYIiwidWluIjoiMTYyNjg0NDcxNCJ9&data=yqVhYsh1f_JZWZW11IzwsVR0Q-1C1JmwjCIp9jjgqz0W2_2DG_yoywmPLEY-tztf-RpWdCgRU7PnWseMSsJFww&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>寒脚本二群</span>
+                    </div>
+                    <p>寒脚本二群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=GXUiPyzbWoLXGqbjpxDI2rxxOzUM3DYCCr6kfrjn2ySd8tz4WAjdl%2Fp12XKaMZFW&busi_data=eyJncm91cENvZGUiOiIxMDcxOTY5MTE1IiwidG9rZW4iOiJWcWJsT1dUMTIrNmNjRExQK0kyQUNPWG5aa0UzVUVRazR1UHVTeWE3K05zMHE5a2l6aTR1V2w2UVZWbDkrYjlqIiwidWluIjoiMTYyNjg0NDcxNCJ9&data=xlMdqqDKPlM9ab71EOIFYIg3M2nVE4FGvna29uAmQ_Nd1m2Pv7YZ6EHSkn3SVWfhGIhLyw5EeBfJ3v-0oYis5w&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>Yezx</span>
+                    </div>
+                    <p>Yezx，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=MX5sEm2SqIxKrWzfB0id7r4cimiwJWB47E2Gl4aH5U6pZ8UUwgjLkEjnd%2FmLA2HR&busi_data=eyJncm91cENvZGUiOiIxMDQ3Njc3MjUzIiwidG9rZW4iOiIxK1MwZkI3b0FLNlEvS3YyblVEQXM2cjRycjRZbGdwUzE2ZktBNC9FYmpHMjdOeTM5dXQ4M0FvalBoK256elRUIiwidWluIjoiMTYyNjg0NDcxNCJ9&data=Tio5UpNYOmhnivp6cmGwoKQ7tSsuiN2mS1PBth46OWEgV5Zrcd9am4_CD4UxMaRhDDbj2vBlGUXLwLAVo_6PTA&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>脚本交流群和聊天</span>
+                    </div>
+                    <p>脚本交流群和聊天，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=AnvbNGuQpC1QGTa42vQA99QAz4ya2zWVN0e%2FKg8hoIPJB8aIRjCM20IrsBPkbaUG&busi_data=eyJncm91cENvZGUiOiI5NjE5NzAxMzQiLCJ0b2tlbiI6Im1YcGcvMHlyS3lJQlVPenV3MnBJK01oTjJKeDZvQmJzZGpjM1ZJQ3BJWUY5NlNSeWwyaS9hOHBoR1UxV0lQL2YiLCJ1aW4iOiIxNjI2ODQ0NzE0In0%3D&data=86e5NlHmbrSPxt5gGHcOlS61_eq3wZa5dXaIg8460WQ17ejiSt6HOCQegExzZU9KOkKxUQedALPB1U-dTafuvA&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>roblox交流群</span>
+                    </div>
+                    <p>roblox交流群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=CQC8LV%2BUU0kFDkhNL3nG0z4ZaFZFxaN26lJON8Z7WNrr%2FMGqZrUzTZIAO23rLctX&busi_data=eyJncm91cENvZGUiOiI1NjYyNTc5NDQiLCJ0b2tlbiI6InNwRmM3enpHN1pkSElqMm0xNFJqY3FlU05QdVR3aWR2MUVKMTFIOFNvSnMzZDZmSUFSclJLbzBrRmdFb2NFbGUiLCJ1aW4iOiIxNjI2ODQ0NzE0In0%3D&data=MtAzr48H3laP_rPuJqP0sopqly0bMOffzY9uHL2mBWHLxj135T85d0-NCORv-XLgUVK84UGv61r_Okxz1mDDDw&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>旧冬主群</span>
+                    </div>
+                    <p>旧冬主群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=Rccw1e2rANYDN4QZ8%2FUSJO2Snu5gcmuaySUTnr%2BSUs%2FhJr6KKDu0snmZh1iuX%2F%2Ft&busi_data=eyJncm91cENvZGUiOiIxMDIzOTkxNDM4IiwidG9rZW4iOiJNWk1qbjJzdTNFYm5PZ2JnRE5kd0swWXhWZkloeW54SVpGaStoL0dORVo1Y2VrSms1V0tCblVxK0dTMEVvZDJlIiwidWluIjoiMTYyNjg0NDcxNCJ9&data=1zaovt_UEHjy4hCoqUHRVys66IBmHYyymqDuCHW9--r4WtcXaYm22OpaKFnFsqfHhCjga8D8277vtX3mZgBq2w&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>旧冬二群</span>
+                    </div>
+                    <p>旧冬二群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=dZc1G51vziTsNBZgChFU0VTP5D3%2F5lKAQ%2BXbEzWN4zUePpOFnooCGReQ7CWIBtqy&busi_data=eyJncm91cENvZGUiOiI0Njc5ODkyMjciLCJ0b2tlbiI6ImxEK0doV2Q5RnZnbERWN2N2VTc0dlBXa2haUE0xNHlUZTArU0RySkxhQlM1Ny85SC94OTFuaS9QMUtyRml3VlYiLCJ1aW4iOiIxNjI2ODQ0NzE0In0%3D&data=l3xIqYJFEqVrvxWFV7mFmzQEO9kpD_0yEpKA6PzSER4pyS_wOqrZSgMqZFpduIE0BFNuaPpB5YEEXthbC-tQrw&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>旧冬三群</span>
+                    </div>
+                    <p>旧冬三群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=HE2EY9bkrAV7HbuAgQ%2BUsGHTEU9%2F%2BrcbKRTGt9eGsYuJishA6ELP%2Bz%2BEZ%2FM8YTgN&busi_data=eyJncm91cENvZGUiOiIxMDIwMDI5NTM3IiwidG9rZW4iOiJ6cHlGU21keENBb1hETTVYbEprZG51dmVQTGRRSFBGTjRNUFNtNFFSZzhIUGR2OWw3V3Nibmt4Y0FIMXpqQWxoIiwidWluIjoiMTYyNjg0NDcxNCJ9&data=bRpt7YzZLqBO4r6Hg1uLRgvYp8DxFDeeTaal1n5MwXvEeuOjVtzyxDN7JTJBvM5Sk9LAXgK5LqUPkAvtjYzB0g&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>TiKa Team</span>
+                    </div>
+                    <p>TiKa Team，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=00WpAosUwG3IA41gq%2BL7fefCoCA6GfrJQY8OMLM16JRW6qvEfV4E8H5bg%2B%2BVJPDL&busi_data=eyJncm91cENvZGUiOiIxMDczMDM5MDAyIiwidG9rZW4iOiJEang1amhKSVdSZlMwbWdmNGRVK0F1cmMvKzBsV0F0NG03NE1OL0xCY0dhY1JNTU4wZVhjUUhHTmJQQ0lFQnNWIiwidWluIjoiMTYyNjg0NDcxNCJ9&data=JwuMOC8CVf5OFlVF-GQ-mpLaR4RKhgHpNlAmQDTe0nvUKK2eoM30odjusWXABliEOxHXaLaB_q_wEFoAKMIyWQ&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>TiKa Team二群</span>
+                    </div>
+                    <p>TiKa Team二群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=bagmpxBlhmr0xoUfo35UBvivO4Rf%2BuSqR7ZPjbxYZuG6I40pgTmBfWegl%2FOdOcNH&busi_data=eyJncm91cENvZGUiOiI5MDEyMDkxMzQiLCJ0b2tlbiI6IktjWUN6bDBFWGcxZTU2SHdibUF5dVpRam94aENnM1RqcEpoV3NRdnZRRXkzbW1ZNmdzT2l1aTEzYjEweTkraDQiLCJ1aW4iOiIxNjI2ODQ0NzE0In0%3D&data=n4Xr9M18yfQOxA3K49XHYky3tdPxG89HttydBtZTVOOJCHYIsubGFyFWpwEVrqeTpQEt7RVJR60EoU5fhvZBiA&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>Skin主群</span>
+                    </div>
+                    <p>Skin主群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=ru%2FPcyUGf5DFeCLyLQ3Bfgfp4v3EKmgMhlPtepHKxzQLULiSZ1LyP8yuzdxb7Mzz&busi_data=eyJncm91cENvZGUiOiIxMDczMzgxMjYwIiwidG9rZW4iOiJESUxFNTQ1d1ExSldNZ3ZVZER1V0xwWXgybDFxVExWbzZzT3hWa3FIUUVoYnNBYk1jNFhiQlU4bFhvdEJnYmtRIiwidWluIjoiMTYyNjg0NDcxNCJ9&data=nRmltVzCXNzA_oS5V72QoajSFErnhMK1EW8Wt-KFWpptUJUrSU1FsU5wgZ0ISe1xGkDKoL6bdSDOpqa3dEqOXQ&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>Skin二群</span>
+                    </div>
+                    <p>Skin二群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=wsitItzy%2FeHwUErhTFBStPpTtn4dR5OBgQi8q28SrTLqaRRk%2FMnU6eLY16brU1Wb&busi_data=eyJncm91cENvZGUiOiIxMDc1NzUxMTI3IiwidG9rZW4iOiJ6bHBSd1VqWDNZUzZmelk5NGpWRW0wUEVyVTN2THVVNUFTbXRoTHRtVTg1ZDBCRGNlYXpVaVY0T3R6QUpNT21QIiwidWluIjoiMTYyNjg0NDcxNCJ9&data=joxnvKEoFoXFb4Q2J99rczuJRUm5TbOLgfjwsfmDg5cR2D2UoQZSNo1ucTUsMf4HKEhtwvFSs8yWkZr-E4fypQ&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>XION主群</span>
+                    </div>
+                    <p>XION主群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=1W0sqfDFWHYIC8f0Hdpbj6YfH%2FxX2LXLAQYQO3Y%2F6X9dgnkRbXuVnZGwnOy7IshI&busi_data=eyJncm91cENvZGUiOiI5ODQ4MjA2NjkiLCJ0b2tlbiI6IjNNV1JIMUwzQ0FhZ0owQXNjdUNhMjV3cWhqM21pWVJBU3QvUE5naFA2akt2aEJXU0RtYmdoMm5nTHZYU1RweUYiLCJ1aW4iOiIxNjI2ODQ0NzE0In0%3D&data=mGAKCi8sT0R4vkHFP7R_D4QYS9zZxSx-xq1cBQ2fJSaMEpzzirGPY44YvZWBetd0382THk-v95W4VGEfzOcekg&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>XION二群</span>
+                    </div>
+                    <p>XION二群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=6ygxygLzvpwePzx3f6heNrT6EtAFeOiEgzIv1YFW8AFHMMujaQUQkKM2b1t8fiU4&busi_data=eyJncm91cENvZGUiOiIxMDc0NTgwNzg5IiwidG9rZW4iOiJvaFFmUmlkYVFnWlQyWHhzdXg5a1c3U1lpUnBFOHpPbW5XSkZUaW1JS01lVXArdHhmbWRGcnVOcVJTUDA1UDVGIiwidWluIjoiMTYyNjg0NDcxNCJ9&data=edNXkY7JNlemBRIasgXfER9GNjVo2RE3_ccEttymGbI-pNzHD8-3_ebpXOMbfHpuQIkahNmu2DvP-4l2F1oD_g&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>XION三群</span>
+                    </div>
+                    <p>XION三群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=tmE7j2eAXRmNnE5F0GyBkI2M1NqRzFyoSitz3iH6OVTaGFbaZf%2FyN0KvEe%2FkBN4q&busi_data=eyJncm91cENvZGUiOiI5NzcxODQ0OTAiLCJ0b2tlbiI6IjgyQW5SaWlFc1ZWOXY5N0V5R2ZiTUN0M0N6TlpjMEpGQzBXWXI4Rlhtc3ovN2Z2azE5Vk1FNGNpSHBEYzh1SnQiLCJ1aW4iOiIxNjI2ODQ0NzE0In0%3D&data=MuPVq2UGLfbfqIkmMQ4EHl1vQbuqFeoT9__r6GKaVJ4N0Hnvh-F8Q5Vu4KQ56F4iRKE49BJo1d3Oqy5VeEFQJw&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>勃兰登堡主群</span>
+                    </div>
+                    <p>勃兰登堡主群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=wq4%2BAoD2dFLateIorK3filXytRMQq9JqZItMst%2BSIe63TdgtcKNE0eD9udJoFgVB&busi_data=eyJncm91cENvZGUiOiI5NjU0NTExMjciLCJ0b2tlbiI6IkxFWFdXaFN1TTE0SlUzcmErRnlIOFJXRy9lMU5PTUMyVWp0cGdvWkxoL0pCTWtGVUw4a3ZMYjU2RWxGTkpUVmgiLCJ1aW4iOiIxNjI2ODQ0NzE0In0%3D&data=pKp3QpRk9jmafAfzGBE-7UggnzJS2mIB_HaYkTo_jJZhwoavULKKUrtL-zwO9knzOcJZloKc1Youbes9dSnrPg&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>Tca keyasidᵀᶜᵃ</span>
+                    </div>
+                    <p>Tca keyasidᵀᶜᵃ，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=fA%2FiEsbRN5K3WOJBvGbHfdTRHvUMblXS5jb7bJcr1JADJkMGr44hr3InNmKLp6dS&busi_data=eyJncm91cENvZGUiOiIxMDcwNDQyNTAwIiwidG9rZW4iOiJVTTNySm5VVnBxYitOcGRPbE8wa21hTjhxeUQ0QUxDOFR5N3hvbDFpSlppSStIcU4zQU1VYVZOWlQ3YWZwbGlIIiwidWluIjoiMTYyNjg0NDcxNCJ9&data=ncsQv9gOABNc4_ArUeer0y5UJV6Ej41C3jLw5HQPwkvkzZK7LZIb8ZJcU_k76ldvoPjealAue4SkEYwrKvx8GA&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>多元化roblox主群</span>
+                    </div>
+                    <p>多元化roblox主群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=%2FJoV3w7c%2FATYgmEncGXojnOuYS483F4ZkfI%2BHjtVC1gvQUZ5ViEqLCV58NJ3Tpjx&busi_data=eyJncm91cENvZGUiOiIxMDQwMTQ5NjkyIiwidG9rZW4iOiJRVzhVanIyREtidU9IUVpwa1BrZDEzRWFZY29tZ2hkbWYwMCtBTUh0TWNDcG4xQ2MxSG9VUnowOUN6TFlrZ2VVIiwidWluIjoiMTYyNjg0NDcxNCJ9&data=TqFGTaic5rNtGsMZZQLqvuDW4BcpYabXHIhuH8iY1-M7GTIkQx1JzfdlNBR4PogMTz_ltDqAEvAe5UdRWoOVlQ&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>多元化roblox二群</span>
+                    </div>
+                    <p>多元化roblox二群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=MuvYGjWe3xjHDWWL4cM5%2Bl3sCiSezHjXBqTj%2FVTxKqXOIcyOwNaCDKPFOTk325ae&busi_data=eyJncm91cENvZGUiOiIxMDEzOTQ2MzE2IiwidG9rZW4iOiJwMUJLb2ozcXUxaFZGb0RxN3N1OFI3R1psMjN2dGozYjhWMlIrQlUwTDRXYmk4VTlWNHgvRDVCc05xQ25MY1BQIiwidWluIjoiMTYyNjg0NDcxNCJ9&data=w_0OTAPwclEL3rt2ITWCoThfNQHaWMeJ_Y14m1L4vxNnQpaFUW-NJZnMZBiYzXIiHWryGVkB2hcayBnEgiWYAA&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>HB FXM主群</span>
+                    </div>
+                    <p>HB FXM主群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=DO104GYpMVtIHzp34SOXg%2BDqnHD4Voc5iXwM7%2FKeHo%2F57GQbskvL4iuf6v0ULOXO&busi_data=eyJncm91cENvZGUiOiIxMDU1ODcwNzY1IiwidG9rZW4iOiJCdHh0Y25MaUNYakxzbDR2TVB5VGZ4a2FRQ293SDJIeUk3cFpRZEJwQ0p1T0Y0OUlCRU43ZnhlaHdTZ1lwT3N6IiwidWluIjoiMTYyNjg0NDcxNCJ9&data=_5wK1uGAe2UEHZ15MgJzQiJySPOUJeURFveVCzxy1OJdPx-V1g_UPZy4gX9l1LrWhv0nbRYqCvzJZfvDcrbP9g&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>小尘脚本主群</span>
+                    </div>
+                    <p>小尘脚本主群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=f6du6pw%2BAwuSZ75Bn3Yca23e5aUa8ARjTLmfsN0ykmuIBHNKf4Dvq7u%2B43Lcmwo9&busi_data=eyJncm91cENvZGUiOiIxMDI1NjU5NzczIiwidG9rZW4iOiIvTEM3OGJRN0sxRGtwclpySjZlYkU1aGdpS1dtQVdMcEFkNHdBZ3lYY2I2ZjhhcDZqemxrZW9aSHRlb01VSFVNIiwidWluIjoiMTYyNjg0NDcxNCJ9&data=bp8mgUnMIT-1TutbEopHwkCH0VVAO7QtZ5J8WaHZpf-YrSMITC4yTm01UWhry0cQoe62t1IYhaq4ijf0lMr4Zw&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>小尘脚本二群</span>
+                    </div>
+                    <p>小尘脚本二群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=x6Cf60791bkf5z4V0o8oE0Pawc2EBs0L0ERem11SvGNxxG6vL3eNwXYB7CCFHL%2F4&busi_data=eyJncm91cENvZGUiOiI2MjIwMzc1NjAiLCJ0b2tlbiI6ImJPWDNpeGx5UzRnajFNeEduVjRKR0pNalpjeDJ6azJOWVNZcEVMUFR2YzBDTXR3VFp2VEZMZ0VJV2NiQlRhaFAiLCJ1aW4iOiIxNjI2ODQ0NzE0In0%3D&data=ortln2hPNRnFtIs9DKReQFP2frHg_KLfbeDRl_pCRIv50YLMi8YaXOnw2F63v7Bf0MAJo4QV8RtuBDNpUmjPOw&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>小尘脚本三群</span>
+                    </div>
+                    <p>小尘脚本三群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=rukO%2FCjQEomqdSr3YLpR03jMJolBNKOrlVSq0guzyScYLf%2BF0nPn5XjvMxmfFb9v&busi_data=eyJncm91cENvZGUiOiI3MDg3NjAxMTMiLCJ0b2tlbiI6IkpZb0tVdjZ2TFJMRmlteDBLUHpIb0svUHdFT0QrYk1Yb04xdzNzWU5kNHF2SXFzSjk3TElmQ3ZzTVNhd2JWZFkiLCJ1aW4iOiIxNjI2ODQ0NzE0In0%3D&data=9d0anvC6kgPOgbWGFkEkOnsk9lZKEXN27gYO2yaudk_tRK7YDvY5Dcf79QJThMDDy1sqPqoHWlRMcx4v2h1DiA&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>FIN</span>
+                    </div>
+                    <p>FIN，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=jLKUNN9nT7ibWdFZfUiuzY59yBmVvyUW6%2BquWdS8b59BHi1tV%2BM%2Bh1CX55nHbOS9&busi_data=eyJncm91cENvZGUiOiI5NTE3NDA1ODgiLCJ0b2tlbiI6InJrWFRhMGw5WUdlUUVqS0lnVEdHUjhCbDdVcVUrcHdjdThmVzZtcStRWVFtRXdBWEM0MkdyeGhMd3B0R1FManAiLCJ1aW4iOiIxNjI2ODQ0NzE0In0%3D&data=9AZJVOKfskzkZ22kFYN5bKb6KFdL7cznCK6GBHHx9DHXHX7hEdMyQap2-cN2NPSowhyHEwCkU-NM2Ai1ZVGMMw&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>德中</span>
+                    </div>
+                    <p>德中，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=DM1b1qslzhllsHdxEeWkZ33C863YuupdIjCNjpOGJdZuCzAUxG5OdyLeoa9g%2FndE&busi_data=eyJncm91cENvZGUiOiIxMDQwOTcwNTY0IiwidG9rZW4iOiJ4T250dHhEaDlyd2xLQ1ZBR29yUFkzZlRRM29DNFB2SGJnbUFpZkR1Sk5JUWNtZUlhUjJEdi9aS3NwdVk3a05GIiwidWluIjoiMTYyNjg0NDcxNCJ9&data=9XT3AcE5wFNIgxP0LEANGVak7QnD1bo_T49HGAN8pmRw548zHsBwCrh2xVIo2M_Q1DVhFtr-nCcOoHfFlI9ulA&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>AR主群</span>
+                    </div>
+                    <p>AR主群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=97wGJ7lu4Qj6GNq3p3C2IZYqidKM86UaqfUlemRKajb3T5%2B8C%2BNuvCYmgNU7R03M&busi_data=eyJncm91cENvZGUiOiI0NTc5Nzk2OTMiLCJ0b2tlbiI6InpUckxId0wrMUZycDE4UHNjaXNOVm0xaFBpd25CTXFwZUY3Q2dSUzRUUE45a0p2azZJSHlmSzJQYmRFMGNIUjAiLCJ1aW4iOiIxNjI2ODQ0NzE0In0%3D&data=7sC0TQNIB1NMpeQxVhqq5u-Q3NmrSNH6n6p8vVJvrFc7QvdSoel7ZAKkUaP1IGIe2at-jBy1ljKfRGOkqI0iZA&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>AR二群</span>
+                    </div>
+                    <p>AR二群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=NI7RLhJoVS7ZeL1H7asvDrMFpJr%2Bi5w7Papy9xfDnSAa1zf34ngfSAvdpTAjXFL%2B&busi_data=eyJncm91cENvZGUiOiIxMDQxNzIzODQ1IiwidG9rZW4iOiJoU1o2UVNabmxDWjREcCtzRTFRTFlvYW1uWmdYTW1KOUlmdjNtUkZpSk1KRkI0ZWlHQmJ2Z2lqWmRTaGt0ZDVKIiwidWluIjoiMTYyNjg0NDcxNCJ9&data=nSNzXFqCU-bd_l37lPAd0n590AtcDA83TBvObuEAWr3_874M9fBunhgg3eP64c7t9tmkzJl7nBVIgSzmKZeVxw&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>AR三群</span>
+                    </div>
+                    <p>AR三群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=B%2BL8SWxJ50%2BADxjeshganAUhzkUY4L%2B27CuH%2FtWXWPE%2Flr1%2BRv8Qd17%2FIBtUmjZ7&busi_data=eyJncm91cENvZGUiOiI4MjI4NjExOTciLCJ0b2tlbiI6IjRnYXE4L3lmd0pWaUh2YmUySmM0WTlodDVpL2gxTHdJZ2kvTDlhbkhEZFprQ3ZPZERLcnRmTGIxM0lhNWtYMU0iLCJ1aW4iOiIxNjI2ODQ0NzE0In0%3D&data=LFknXC_lYyeDJqY_wJwBtL3n9JS6yeyBu80GAX_RLOLpp0B2rsBXDWiUyGJlVIMIJGahdGe93X76Zo89EC2HTA&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>黑洞中心主群</span>
+                    </div>
+                    <p>黑洞中心主群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=EeuurVsP2SFVrD9010gjoXonjJtdUeELUUCAFQUWonpCfvzHuU%2FUzMM5CwhfS0iN&busi_data=eyJncm91cENvZGUiOiI0NjcxODY3NDgiLCJ0b2tlbiI6Imw1RkNCYzZWZlBrVHN4cDE1cFpDcFIrK3hHMlJMalBlZEc1cVU0M3hMbDZMYlpoc2Y0ejhyVmNHVFB0RXRMT3AiLCJ1aW4iOiIxNjI2ODQ0NzE0In0%3D&data=omi0N7IWVqpvg9MwgcDxaBo_aDKizIiyYJhdbmuCjgAh_E5io4Su_srlzPQzAXKgYJ4qN4cHnGT1soQEIZsqww&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>黑洞中心大群</span>
+                    </div>
+                    <p>黑洞中心大群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=zKXRn4K0TDGaSmJNtZtDN3h6LwqS85evZ9EpISUnCNHuOgZpO%2Fe8X8P7kRbdM16Y&busi_data=eyJncm91cENvZGUiOiI1ODk4MjYzODUiLCJ0b2tlbiI6IitNbTU2eXJuVDUrd2VJUGFCMSsrcTcwMjk1VTV1U2ZaUWd2a3JJMmsyN3k3ZW1JbzhvVkhwWTh1SnU5QTF5VGMiLCJ1aW4iOiIxNjI2ODQ0NzE0In0%3D&data=LMDm-4PeGKMk2dr_fTURhQw-dYjJT2YDwMOi9PZwmc58-ryYKAyDbk71WlTC6IxIRQlbfq5SkTXll3a7J0FueQ&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>黑洞中心二群</span>
+                    </div>
+                    <p>黑洞中心二群，分享技术心得与生活趣事。</p>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=dhU%2FeCjgGZLBt4R%2BCfuEtI7oSimE%2FUMB2JT7ooZ9lagF%2FRD0%2B3IP%2BWiP9otViY7s&busi_data=eyJncm91cENvZGUiOiI4ODU4OTY1ODkiLCJ0b2tlbiI6ImhWQ3ZTUUFPLzIyUzBBYlNINFRaY0Z0VWRtVjVqT3poSFlGRkJCcHhldU1LS1FWYUlTNWUwNWZmZDY5Ui9tRHkiLCJ1aW4iOiIxNjI2ODQ0NzE0In0%3D&data=ADb_lAQfkgxzGMRmCgW_TDgCYEYb5Wx5WMonri7JdhiSZQdYA9-cmas5KHZ-ONOUN1Vec1VtvnkVsk8ry1a7IA&svctype=4&tempid=h5_group_info" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+            
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© ❄️2025 QQ群快捷加入页面 | 本页面仅提供QQ群加入链接，不收集任何用户信息,对了，别忘记关注我红姜❄️</p>
+            <p>提示：加入QQ群可能需要先登录QQ账号</p>
+        </div>
+    </div>
+
+    <script>
+        // 简单的交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const joinButtons = document.querySelectorAll('.join-btn');
+            
+            joinButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    // 添加点击反馈
+                    this.style.transform = 'scale(0.98)'
